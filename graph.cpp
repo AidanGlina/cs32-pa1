@@ -77,7 +77,7 @@ namespace main_savitch_15
 	 	{
 	 		if (i < old_allocated)
 	 		{
-	 			new_labels[i] = labels[i]
+	 			new_labels[i] = labels[i];
 	 		}else
 	 		{
 	 			new_labels[i] = label;
