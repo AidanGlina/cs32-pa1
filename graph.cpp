@@ -30,6 +30,25 @@ namespace main_savitch_15
 	 }
 	 labels = new Item*[allocated];
   }
+	
+  template <class Item>
+  graph<Item>::graph (const graph &source) : many_vertices(0), allocated(source.allocation)
+  {
+	 edges = new bool*[allocated];
+	 for(size_t i = 0; i < allocated; ++i)
+	 {
+		edges[i] = new bool[allocated];
+		edges[i] = source.edges[i];
+	 }
+	 labels = new Item*[allocated];
+
+	 for(size_t i = 0; i < allocated; ++i)
+	 {
+		labels[i] = source.labels[i];
+	 }
+	 many_vertices = source.many_vertices;
+  }
+	
   template <class Item>
   graph<Item>::~graph ()
   {
