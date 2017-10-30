@@ -91,7 +91,7 @@ namespace main_savitch_15
 		  edges[other_number][new_vertex_number] = false;
 		  edges[new_vertex_number][other_number] = false;
 	 }
-	 labels[new_vertex_number] = label;
+	 //labels[new_vertex_number] = label;
   }
 
   template <class Item>
