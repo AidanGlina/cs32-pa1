@@ -83,6 +83,7 @@ namespace main_savitch_15
         
         // CONSTRUCTOR
         graph( );
+	~graph( );
         // MODIFICATION MEMBER FUNCTIONS
         void add_vertex(const Item& label);
         void add_edge(size_t source, size_t target);
