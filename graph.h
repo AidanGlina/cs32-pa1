@@ -82,8 +82,9 @@ namespace main_savitch_15
         // MEMBER CONSTANTS
         
         // CONSTRUCTOR
-        graph( );
-	~graph( );
+        graph (size_t initial_allocation);
+        //DESTRUCTOR!!!!
+        ~graph();
         // MODIFICATION MEMBER FUNCTIONS
         void add_vertex(const Item& label);
         void add_edge(size_t source, size_t target);

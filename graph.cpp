@@ -21,7 +21,7 @@ using std::size_t;
 namespace main_savitch_15
 {
   template <class Item>
-  graph<Item>::graph (size_t initial_allocation = 10) : many_vertices(0), allocated(initial_allocation)
+  graph<Item>::graph (size_t initial_allocation) : many_vertices(0), allocated(initial_allocation)
   {
 	 edges = new bool*[allocated];
 	 for(size_t i = 0; i < allocated; ++i)
@@ -30,7 +30,17 @@ namespace main_savitch_15
 	 }
 	 labels = new Item*[allocated];
   }
-
+  template <class Item>
+  graph<Item>::~graph ()
+  {
+  	//since it's a 2d dynamic array we might have to do this, but im not sure:
+  	for (size_t i = 0; i < allocated; ++i)
+  	{
+  		delete [] edges[i];
+  	}
+  	delete [] edges;
+  	delete [] labels;
+  }
   template <class Item>
   void graph<Item>::add_edge(size_t source, size_t target)
   // Library facilities used: cstdlib
@@ -39,8 +49,8 @@ namespace main_savitch_15
   }
 
   template <class Item>
-  void graph<Item>::add_vertex(const Item& label)
-  // Library facilities used: cassert, cstdlib
+  void graph<Item>::add_vertex(const Item& label) //this one may need some work
+  // Library facilities used: https://my.sa.ucsb.edu/gold/CourseDetailInfo.aspxcassert, cstdlib
   {
 	 size_t new_vertex_number;
 	 size_t other_number;
@@ -68,6 +78,10 @@ namespace main_savitch_15
 	 				new_edges[i][j] = false;
 	 			}
 	 		}
+	 	}
+	 	for (size_t i = 0; i < old_allocated; ++i)
+	 	{
+	 		delete [] edges[i];
 	 	}
 	 	delete [] edges;
 	 	edges = new_edges;
@@ -129,10 +143,10 @@ namespace main_savitch_15
 	 assert(vertex < size( ));
 
 	 for (i = 0; i < size( ); ++i)
-		{
-	if (edges[vertex][i])
-	  answer.insert(i);
-		}
+	 {
+	 	if (edges[vertex][i])
+	 		answer.insert(i);
+	 }
 	 return answer;
   }
 
