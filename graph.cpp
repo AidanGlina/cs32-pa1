@@ -28,6 +28,7 @@ namespace main_savitch_15
 	 {
 		edges[i] = new bool[allocated];
 	 }
+	 labels = new Item*[allocated];
   }
 
   template <class Item>
@@ -71,7 +72,19 @@ namespace main_savitch_15
 	 	delete [] edges;
 	 	edges = new_edges;
 	 	//allocate more memory for labels array
-	 	
+	 	Item *new_labels = new Item*[allocated];
+	 	for (size_t i = 0; i < allocated; ++i)
+	 	{
+	 		if (i < old_allocated)
+	 		{
+	 			new_labels[i] = labels[i]
+	 		}else
+	 		{
+	 			new_labels[i] = label;
+	 		}
+	 	}
+	 	delete [] labels;
+	 	labels = new_labels;
 	 }
 	 for (other_number = 0; other_number < many_vertices; ++other_number) //the variable names suck
 	 {
