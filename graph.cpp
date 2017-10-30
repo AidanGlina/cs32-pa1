@@ -21,7 +21,7 @@ using std::size_t;
 namespace main_savitch_15
 {
   template <class Item>
-  graph<Item>::graph (size_t initial_allocation) : many_vertices(0), allocated(initial_allocation)
+  graph<Item>::graph (size_t initial_allocation) : many_vertices(0), allocated(initial_allocation = 10)
   {
 	 edges = new bool*[allocated];
 	 for(size_t i = 0; i < allocated; ++i)
@@ -40,6 +40,7 @@ namespace main_savitch_15
   	}
   	delete [] edges;
   	delete [] labels;
+  	many_vertices = 0;
   }
   template <class Item>
   void graph<Item>::add_edge(size_t source, size_t target)
