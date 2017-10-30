@@ -21,85 +21,114 @@ using std::size_t;
 namespace main_savitch_15
 {
   template <class Item>
-  graph<Item>::graph ( ) : many_vertices(0) {
-    // intentionally empty
+  graph<Item>::graph (size_t initial_allocation = 10) : many_vertices(0), allocated(initial_allocation)
+  {
+	 edges = new bool*[allocated];
+	 for(size_t i = 0; i < allocated; ++i)
+	 {
+		edges[i] = new bool[allocated];
+	 }
   }
 
   template <class Item>
   void graph<Item>::add_edge(size_t source, size_t target)
-  // Library facilities used: cassert, cstdlib
+  // Library facilities used: cstdlib
   {
-    assert(source < size( ));
-    assert(target < size( ));
-    edges[source][target] = true;
+  	edges[source][target] = true;
   }
 
   template <class Item>
   void graph<Item>::add_vertex(const Item& label)
   // Library facilities used: cassert, cstdlib
   {
-    size_t new_vertex_number;
-    size_t other_number;
-
-    assert(size( ) < MAXIMUM);
-    new_vertex_number = many_vertices;
-    many_vertices++;
-    for (other_number = 0; other_number < many_vertices; ++other_number)
-      {
-	edges[other_number][new_vertex_number] = false;
-	edges[new_vertex_number][other_number] = false;
-      }
-    labels[new_vertex_number] = label;
+	 size_t new_vertex_number;
+	 size_t other_number;
+	 //first check if we need to allocate more memory
+	 new_vertex_number = many_vertices;
+	 many_vertices++;
+	 if (many_vertices >= allocated) //this might have some bugs
+	 {
+	 	size_t old_allocated = allocated;
+	 	allocated += 1;
+	 	bool **new_edges = new bool*[allocated];
+	 	for (size_t i = 0; i < allocated; ++i) //create new 2d dynamic array
+	 	{
+	 		new_edges[i] = new bool[allocated];
+	 	}
+	 	for (size_t i = 0; i < allocated; ++i) //put values in old array into new one
+	 	{
+	 		for (size_t j = 0; j < allocated; ++j)
+	 		{
+	 			if (i < old_allocated && j < old_allocated)  //there may be a quicker way to do this
+	 			{
+	 				new_edges[i][j] = edges[i][j];
+	 			}else
+	 			{
+	 				new_edges[i][j] = false;
+	 			}
+	 		}
+	 	}
+	 	delete [] edges;
+	 	edges = new_edges;
+	 	//allocate more memory for labels array
+	 	
+	 }
+	 for (other_number = 0; other_number < many_vertices; ++other_number) //the variable names suck
+	 {
+		  edges[other_number][new_vertex_number] = false;
+		  edges[new_vertex_number][other_number] = false;
+	 }
+	 labels[new_vertex_number] = label;
   }
 
   template <class Item>
   bool graph<Item>::is_edge(size_t source, size_t target) const
   // Library facilities used: cassert, cstdlib
   {
-    assert(source < size( ));
-    assert(target < size( ));
-    return edges[source][target];
+	 assert(source < size( ));
+	 assert(target < size( ));
+	 return edges[source][target];
   }
 
   template <class Item>
   Item& graph<Item>::operator[ ] (size_t vertex)
   // Library facilities used: cassert, cstdlib
   {
-    assert(vertex < size( ));
-    return labels[vertex];     // Returns a reference to the label
+	 assert(vertex < size( ));
+	 return labels[vertex];     // Returns a reference to the label
   }
 
   template <class Item>
   Item graph<Item>::operator[ ] (size_t vertex) const
   // Library facilities used: cassert, cstdlib
   {
-    assert(vertex < size( ));
-    return labels[vertex];     // Returns only a copy of the label
+	 assert(vertex < size( ));
+	 return labels[vertex];     // Returns only a copy of the label
   }
 
   template <class Item>
   std::set<size_t> graph<Item>::neighbors(size_t vertex) const
   // Library facilities used: cassert, cstdlib, set
   {
-    std::set<size_t> answer;
-    size_t i;
+	 std::set<size_t> answer;
+	 size_t i;
 
-    assert(vertex < size( ));
+	 assert(vertex < size( ));
 
-    for (i = 0; i < size( ); ++i)
-      {
+	 for (i = 0; i < size( ); ++i)
+		{
 	if (edges[vertex][i])
 	  answer.insert(i);
-      }
-    return answer;
+		}
+	 return answer;
   }
 
   template <class Item>
   void graph<Item>::remove_edge(size_t source, size_t target)
   // Library facilities used: cassert, cstdlib
   {
-    assert(source < size( ));
-    assert(target < size( ));
-    edges[source][target] = false;
+	 assert(source < size( ));
+	 assert(target < size( ));
+	 edges[source][target] = false;
   }
 }

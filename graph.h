@@ -80,7 +80,7 @@ namespace main_savitch_15
       {
       public:
         // MEMBER CONSTANTS
-        static const size_t MAXIMUM = 20;
+        
         // CONSTRUCTOR
         graph( );
         // MODIFICATION MEMBER FUNCTIONS
@@ -94,8 +94,9 @@ namespace main_savitch_15
 	std::set<size_t> neighbors(size_t vertex) const;
         Item operator[ ] (size_t vertex) const;
       private:
-        bool edges[MAXIMUM][MAXIMUM];
-        Item labels[MAXIMUM];
+        bool **edges;
+        Item *labels;
+        size_t allocated;
         size_t many_vertices;
       };
 }
