@@ -32,7 +32,7 @@ namespace main_savitch_15
   }
 	
   template <class Item>
-  graph<Item>::graph (const graph &source) : many_vertices(0), allocated(source.allocation)
+  graph<Item>::graph (const graph &source) : many_vertices(0), allocated(source.allocated)
   {
 	 edges = new bool*[allocated];
 	 for(size_t i = 0; i < allocated; ++i)
