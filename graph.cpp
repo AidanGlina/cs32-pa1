@@ -52,10 +52,45 @@ namespace main_savitch_15
 	 many_vertices = source.many_vertices;
   }
 	
+graph  graph<item>::&operator=(const graph &source)
+{
+	if( *this == source )
+		return *this;
+	else 
+	{
+		allocated = source.allocated;
+		bool **new_edges = new bool*[allocated];
+		for(size_t i = 0; i < allocated; ++i)
+		{
+			for(size_t j = 0; j < allocated; ++j)
+			{
+				new_edges[i][j] = edges[i][j]; //
+			}
+		}
+		Item *new_labels = new Item*[allocated];
+
+		for(size_t i = 0; i < allocated; ++i)
+		{
+			new_labels[i] = labels[i];
+		}
+		for (size_t i = 0; i < allocated; ++i)
+		{
+			delete [] edges[i];
+		}
+		delete [] edges;
+		delete [] labels;
+
+		edges = new_edges;
+		labels = new_labels;
+		many_vertices = source.many_vertices;
+		return *this;
+  }		
+	}
+}
 template <class Item>
   void graph<Item>::resize(size_t new_allocated)
   {
-  	if (new_allocated < allocated)
+  	if (new_allocated < size())
   	{
   		return;
   	}
@@ -101,6 +136,12 @@ template <class Item>
   void graph<Item>::add_edge(size_t source, size_t target)
   // Library facilities used: cstdlib
   {
+
+  	if(source > allocated)
+		resize(source);
+	if(target > allocated)
+		resize(target);
+	
   	edges[source][target] = true;
   }
 
