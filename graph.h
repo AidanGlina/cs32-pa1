@@ -84,6 +84,7 @@ namespace main_savitch_15
         // CONSTRUCTOR
         graph (size_t initial_allocation);
         graph (const graph &source);
+        graph &operator=(const graph &source);
         //DESTRUCTOR!!!!
         ~graph();
         // MODIFICATION MEMBER FUNCTIONS

@@ -51,8 +51,16 @@ namespace main_savitch_15
 	 }
 	 many_vertices = source.many_vertices;
   }
-	
-graph<item>  graph<item>::&operator=(const graph &source)
+
+
+
+
+
+
+
+
+template <class Item>
+graph<Item> graph<Item>::&operator=(const graph<Item> &source)
 {
 	if( *this == source )
 		return *this;
@@ -85,9 +93,18 @@ graph<item>  graph<item>::&operator=(const graph &source)
 		many_vertices = source.many_vertices;
 		return *this;
   }		
-	}
 }
-template <class Item>
+
+
+
+
+
+
+
+
+
+
+  template <class Item>
   void graph<Item>::resize(size_t new_allocated)
   {
   	if (new_allocated < size())
@@ -121,7 +138,7 @@ template <class Item>
 
 
   template <class Item>
-  graph<Item>::~graph ()
+  graph<Item>::~graph()
   {
   	//since it's a 2d dynamic array we might have to do this, but im not sure:
   	for (size_t i = 0; i < allocated; ++i)
@@ -215,3 +232,4 @@ template <class Item>
 	 edges[source][target] = false;
   }
 }
+
