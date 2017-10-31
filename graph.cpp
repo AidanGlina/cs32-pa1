@@ -52,7 +52,7 @@ namespace main_savitch_15
 	 many_vertices = source.many_vertices;
   }
 	
-graph  graph<item>::&operator=(const graph &source)
+graph<item>  graph<item>::&operator=(const graph &source)
 {
 	if( *this == source )
 		return *this;
