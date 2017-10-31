@@ -143,6 +143,7 @@ template <class Item>
 		resize(target);
 	
   	edges[source][target] = true;
+	edges[target][source] = false;
   }
 
   template <class Item>
