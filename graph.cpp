@@ -38,7 +38,10 @@ namespace main_savitch_15
 	 for(size_t i = 0; i < allocated; ++i)
 	 {
 		edges[i] = new bool[allocated];
-		edges[i] = source.edges[i];
+		for(size_t j = 0; j < allocated; ++j)
+		{
+			edges[i][j] = source.edges[i][j];
+		}
 	 }
 	 labels = new Item*[allocated];
 
