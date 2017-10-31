@@ -174,7 +174,10 @@ template <class Item>
   Item& graph<Item>::operator[ ] (size_t vertex)
   // Library facilities used: cassert, cstdlib
   {
-	 assert(vertex < size( ));
+	 if (vertex >= size())
+	 {
+	 	resize(vertex + 1);
+	 }
 	 return labels[vertex];     // Returns a reference to the label
   }
 
