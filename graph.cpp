@@ -20,8 +20,20 @@ using std::size_t;
 
 namespace main_savitch_15
 {
+
+
   template <class Item>
-  graph<Item>::graph (size_t initial_allocation) : many_vertices(0), allocated(initial_allocation = 10)
+  graph<Item>::graph () : many_vertices(0), allocated(10)
+  {
+  	edges = new bool*[allocated];
+	for(size_t i = 0; i < allocated; ++i)
+	{
+		edges[i] = new bool[allocated];
+	}
+	labels = new Item[allocated];
+  }	
+  template <class Item>
+  graph<Item>::graph (size_t initial_allocation) : many_vertices(0), allocated(initial_allocation)
   {
 	 edges = new bool*[allocated];
 	 for(size_t i = 0; i < allocated; ++i)

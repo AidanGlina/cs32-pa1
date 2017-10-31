@@ -82,6 +82,7 @@ namespace main_savitch_15
         // MEMBER CONSTANTS
         
         // CONSTRUCTOR
+        graph ();
         graph (size_t initial_allocation);
         graph (const graph &source);
         graph& operator=(const graph &source);
