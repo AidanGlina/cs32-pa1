@@ -28,7 +28,7 @@ namespace main_savitch_15
 	 {
 		edges[i] = new bool[allocated];
 	 }
-	 labels = new Item*[allocated];
+	 labels = new Item[allocated];
   }
 	
   template <class Item>
@@ -43,7 +43,7 @@ namespace main_savitch_15
 			edges[i][j] = source.edges[i][j];
 		}
 	 }
-	 labels = new Item*[allocated];
+	 labels = new Item[allocated];
 
 	 for(size_t i = 0; i < allocated; ++i)
 	 {
@@ -60,12 +60,12 @@ namespace main_savitch_15
 
 
 template <class Item>
-graph<Item> graph<Item>::&operator=(const graph<Item> &source)
+graph<Item>& graph<Item>::operator=(const graph<Item> &source)
 {
-	if( *this == source )
-		return *this;
-	else 
-	{
+	//if( *this == source )
+	//	return *this;
+	//else 
+	//{
 		allocated = source.allocated;
 		bool **new_edges = new bool*[allocated];
 		for(size_t i = 0; i < allocated; ++i)
@@ -75,7 +75,7 @@ graph<Item> graph<Item>::&operator=(const graph<Item> &source)
 				new_edges[i][j] = edges[i][j]; //
 			}
 		}
-		Item *new_labels = new Item*[allocated];
+		Item *new_labels = new Item[allocated];
 
 		for(size_t i = 0; i < allocated; ++i)
 		{
@@ -92,7 +92,7 @@ graph<Item> graph<Item>::&operator=(const graph<Item> &source)
 		labels = new_labels;
 		many_vertices = source.many_vertices;
 		return *this;
-  }		
+  //}		
 }
 
 
@@ -119,7 +119,7 @@ graph<Item> graph<Item>::&operator=(const graph<Item> &source)
 			new_edges[i][j] = edges[i][j]; //
 		}
 	}
-	Item *new_labels = new Item*[new_allocated];
+	Item *new_labels = new Item[new_allocated];
 
 	for(size_t i = 0; i < allocated; ++i)
 	{
