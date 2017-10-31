@@ -151,61 +151,16 @@ template <class Item>
   // Library facilities used: https://my.sa.ucsb.edu/gold/CourseDetailInfo.aspxcassert, cstdlib
   {
 	 size_t new_vertex_number;
-	 size_t other_number;
+	 //size_t other_number;
 	 //first check if we need to allocate more memory
 	 new_vertex_number = many_vertices;
 	 many_vertices++;
-	 if (many_vertices >= allocated) //this might have some bugs
+	 if (many_vertices >= allocated) 
 	 {
-	 	size_t old_allocated = allocated;
-	 	allocated += 1;
-	 	bool **new_edges = new bool*[allocated];
-	 	for (size_t i = 0; i < allocated; ++i) //create new 2d dynamic array
-	 	{
-	 		new_edges[i] = new bool[allocated];
-	 	}
-	 	for (size_t i = 0; i < allocated; ++i) //put values in old array into new one
-	 	{
-	 		for (size_t j = 0; j < allocated; ++j)
-	 		{
-	 			if (i < old_allocated && j < old_allocated)  //there may be a quicker way to do this
-	 			{
-	 				new_edges[i][j] = edges[i][j];
-	 			}else
-	 			{
-	 				new_edges[i][j] = false;
-	 			}
-	 		}
-	 	}
-	 	for (size_t i = 0; i < old_allocated; ++i)
-	 	{
-	 		delete [] edges[i];
-	 	}
-	 	delete [] edges;
-	 	edges = new_edges;
-	 	//allocate more memory for labels array
-	 	Item *new_labels = new Item*[allocated];
-	 	for (size_t i = 0; i < allocated; ++i)
-	 	{
-	 		if (i < old_allocated)
-	 		{
-	 			new_labels[i] = labels[i];
-	 		}else
-	 		{
-	 			new_labels[i] = label;
-	 		}
-	 	}
-	 	delete [] labels;
-	 	labels = new_labels;
+	 	resize(many_vertices);	
 	 }
-	 for (other_number = 0; other_number < many_vertices; ++other_number) //the variable names suck
-	 {
-		  edges[other_number][new_vertex_number] = false;
-		  edges[new_vertex_number][other_number] = false;
-	 }
-	 //labels[new_vertex_number] = label;
+	 labels[new_vertex_number] = label;
   }
-
   template <class Item>
   bool graph<Item>::is_edge(size_t source, size_t target) const
   // Library facilities used: cassert, cstdlib
