@@ -52,6 +52,39 @@ namespace main_savitch_15
 	 many_vertices = source.many_vertices;
   }
 	
+template <class Item>
+  void graph<Item>::resize(size_t new_allocated)
+  {
+  	if (new_allocated < allocated)
+  	{
+  		return;
+  	}
+  	bool **new_edges = new bool*[new_allocated];
+	for(size_t i = 0; i < allocated; ++i)
+	{
+		for(size_t j = 0; j < allocated; ++j)
+		{
+			new_edges[i][j] = edges[i][j]; //
+		}
+	}
+	Item *new_labels = new Item*[new_allocated];
+
+	for(size_t i = 0; i < allocated; ++i)
+	{
+		new_labels[i] = labels[i];
+	}
+	for (size_t i = 0; i < allocated; ++i)
+	{
+		delete [] edges[i];
+	}
+	delete [] edges;
+	delete [] labels;
+
+	edges = new_edges;
+	labels = new_labels;
+  }
+
+
   template <class Item>
   graph<Item>::~graph ()
   {
