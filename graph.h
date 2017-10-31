@@ -83,18 +83,19 @@ namespace main_savitch_15
         
         // CONSTRUCTOR
         graph (size_t initial_allocation);
-	graph (const graph &source);
+        graph (const graph &source);
         //DESTRUCTOR!!!!
         ~graph();
         // MODIFICATION MEMBER FUNCTIONS
         void add_vertex(const Item& label);
         void add_edge(size_t source, size_t target);
         void remove_edge(size_t source, size_t target);
+        void resize(size_t new_allocated);
         Item& operator [ ] (size_t vertex);
         // CONSTANT MEMBER FUNCTIONS
         size_t size( ) const { return many_vertices; }
         bool is_edge(size_t source, size_t target) const;
-	std::set<size_t> neighbors(size_t vertex) const;
+    std::set<size_t> neighbors(size_t vertex) const;
         Item operator[ ] (size_t vertex) const;
       private:
         bool **edges;
