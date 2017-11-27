@@ -16,6 +16,8 @@
 #include <cassert>    // Provides assert
 #include <cstdlib>    // Provides size_t
 #include <set>        // Provides set
+#include <iostream>
+using namespace std;
 using std::size_t;
 
 namespace main_savitch_15
@@ -74,24 +76,24 @@ namespace main_savitch_15
 template <class Item>
 graph<Item>& graph<Item>::operator=(const graph<Item> &source)
 {
-	//if( *this == source )
-	//	return *this;
-	//else 
-	//{
-		allocated = source.allocated;
-		bool **new_edges = new bool*[allocated];
-		for(size_t i = 0; i < allocated; ++i)
+		size_t new_allocated = source.allocated;
+		bool **new_edges = new bool*[new_allocated]; //same size as source allocated
+		for(size_t i = 0; i < new_allocated; ++i)
 		{
-			for(size_t j = 0; j < allocated; ++j)
+			new_edges[i] = new bool[new_allocated];
+		}
+		for(size_t i = 0; i < new_allocated; ++i)
+		{
+			for(size_t j = 0; j < new_allocated; ++j)
 			{
-				new_edges[i][j] = edges[i][j]; //
+				new_edges[i][j] = source.edges[i][j]; 
 			}
 		}
-		Item *new_labels = new Item[allocated];
+		Item *new_labels = new Item[new_allocated];
 
-		for(size_t i = 0; i < allocated; ++i)
+		for(size_t i = 0; i < new_allocated; ++i)
 		{
-			new_labels[i] = labels[i];
+			new_labels[i] = source.labels[i];
 		}
 		for (size_t i = 0; i < allocated; ++i)
 		{
@@ -99,20 +101,12 @@ graph<Item>& graph<Item>::operator=(const graph<Item> &source)
 		}
 		delete [] edges;
 		delete [] labels;
-
+		allocated = source.allocated;
 		edges = new_edges;
 		labels = new_labels;
 		many_vertices = source.many_vertices;
 		return *this;
-  //}		
 }
-
-
-
-
-
-
-
 
 
 
@@ -124,11 +118,15 @@ graph<Item>& graph<Item>::operator=(const graph<Item> &source)
   		return;
   	}
   	bool **new_edges = new bool*[new_allocated];
+  	for (size_t i =0; i< new_allocated; ++i)
+  	{
+  		new_edges[i] = new bool[new_allocated];
+  	}
 	for(size_t i = 0; i < allocated; ++i)
 	{
 		for(size_t j = 0; j < allocated; ++j)
 		{
-			new_edges[i][j] = edges[i][j]; //
+			new_edges[i][j] = edges[i][j]; 
 		}
 	}
 	Item *new_labels = new Item[new_allocated];
@@ -144,6 +142,7 @@ graph<Item>& graph<Item>::operator=(const graph<Item> &source)
 	delete [] edges;
 	delete [] labels;
 
+    allocated = new_allocated;
 	edges = new_edges;
 	labels = new_labels;
   }
@@ -172,24 +171,32 @@ graph<Item>& graph<Item>::operator=(const graph<Item> &source)
 		resize(target);
 	
   	edges[source][target] = true;
-	edges[target][source] = false;
+	//edges[target][source] = false;
   }
 
   template <class Item>
-  void graph<Item>::add_vertex(const Item& label) //this one may need some work
+  void graph<Item>::add_vertex(const Item& label) 
   // Library facilities used: https://my.sa.ucsb.edu/gold/CourseDetailInfo.aspxcassert, cstdlib
   {
 	 size_t new_vertex_number;
 	 //size_t other_number;
 	 //first check if we need to allocate more memory
+	 //cout << "many_vertices: " << many_vertices << endl;
 	 new_vertex_number = many_vertices;
-	 many_vertices++;
+	 ++many_vertices;
 	 if (many_vertices >= allocated) 
 	 {
 	 	resize(many_vertices);	
 	 }
+	 for (size_t i = 0; i < many_vertices; ++i)
+	 {
+	 	edges[i][new_vertex_number] = false;
+        edges[new_vertex_number][i] = false;
+	 }
 	 labels[new_vertex_number] = label;
-  }
+	}
+	 
+
   template <class Item>
   bool graph<Item>::is_edge(size_t source, size_t target) const
   // Library facilities used: cassert, cstdlib
@@ -205,7 +212,7 @@ graph<Item>& graph<Item>::operator=(const graph<Item> &source)
   {
 	 if (vertex >= size())
 	 {
-	 	resize(vertex + 1);
+	 	resize(vertex);
 	 }
 	 return labels[vertex];     // Returns a reference to the label
   }
@@ -214,8 +221,11 @@ graph<Item>& graph<Item>::operator=(const graph<Item> &source)
   Item graph<Item>::operator[ ] (size_t vertex) const
   // Library facilities used: cassert, cstdlib
   {
-	 assert(vertex < size( ));
-	 return labels[vertex];     // Returns only a copy of the label
+	 
+	assert(vertex < size( ));	
+
+	return labels[vertex];     // Returns only a copy of the label
+  	
   }
 
   template <class Item>

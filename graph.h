@@ -73,7 +73,7 @@
 #include <set>      // Provides set
 using std::size_t;
 
-namespace main_savitch_15
+namespace main_savi=h_15
 {
     template <class Item>
     class graph
@@ -87,12 +87,12 @@ namespace main_savitch_15
         graph (const graph &source);
         graph& operator=(const graph &source);
         //DESTRUCTOR!!!!
-        ~graph();
+        virtual ~graph();
         // MODIFICATION MEMBER FUNCTIONS
         void add_vertex(const Item& label);
         void add_edge(size_t source, size_t target);
         void remove_edge(size_t source, size_t target);
-        void resize(size_t new_allocated);
+        virtual void resize(size_t new_allocated);
         Item& operator [ ] (size_t vertex);
         // CONSTANT MEMBER FUNCTIONS
         size_t size( ) const { return many_vertices; }
@@ -102,8 +102,9 @@ namespace main_savitch_15
       private:
         bool **edges;
         Item *labels;
-        size_t allocated;
         size_t many_vertices;
+      protected:
+        size_t allocated;
       };
 }
 
