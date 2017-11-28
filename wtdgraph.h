@@ -96,7 +96,7 @@ namespace main_savitch_15
 	wtdgraph<Item>& wtdgraph<Item>::operator=(const wtdgraph<Item> &source)
 	{
 		//stub
-		return &source; 
+		return *this; 
 	}
 
 	template<class Item>
