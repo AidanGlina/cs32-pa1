@@ -10,7 +10,7 @@ namespace main_savitch_15
 	public:
 		wtdgraph();
 		wtdgraph(size_t initial_allocation);
-		//wtdgraph(const wtdgraph &source);
+		wtdgraph(const wtdgraph &source);
 		virtual ~wtdgraph(); //why is this supposed to be virtual
 		virtual void resize(size_t new_allocation); //why is this supposed to be virtual
 		void add_edge(size_t source, size_t target, size_t weight = 0);
@@ -24,8 +24,7 @@ namespace main_savitch_15
 
 	//constructor
 	template <class Item> 
-	wtdgraph<Item>::wtdgraph(size_t initial_allocation)
-	: graph<Item>::graph(initial_allocation)
+	wtdgraph<Item>::wtdgraph(size_t initial_allocation) : graph<Item>::graph(initial_allocation)
 	{
 		//allocate memory for map array
 		weights = new map<size_t, size_t>[initial_allocation];
@@ -38,6 +37,20 @@ namespace main_savitch_15
 	{
 		//not sure how to define the default constructor
 		weights = new map<size_t, size_t>[graph<Item>::allocated];
+	}
+
+	//copy constructor
+	template<class Item>
+	wtdgraph<Item>::wtdgraph(const wtdgraph &source) : graph<Item>::graph(source)
+	{
+		//copy weights
+		weights = new map<size_t, size_t>[source.allocated];
+		for(size_t i = 0; i < source.allocated; ++i)
+		{
+			weights[i] = source.weights[i];
+			for(size_t j = 0; j < )
+
+		}
 	}
 
 
@@ -57,7 +70,7 @@ namespace main_savitch_15
 	{
 		graph<Item>::add_edge(source, target);
 		//resize map array regardless if we need to, since the resize function checks if it's necessary
-
+		//resize(source);
 		weights[source].insert(pair<size_t, size_t>(target, weight)); 
 
 	}
@@ -68,13 +81,13 @@ namespace main_savitch_15
 	void wtdgraph<Item>::resize(size_t new_allocation)
 	{
 		//resize map array
-		if(new_allocation < graph<Item>::allocated) //not sure if size() is the correct thing to use here
+		if(new_allocation < graph<Item>::allocated) 
 		{
 			return;
 		}else
 		{
 			map<size_t, size_t> *new_weights = new map<size_t, size_t>[new_allocation];
-			for (size_t i = 0; i < graph<Item>::allocated; ++i) //not sure if size() is the correct thing to use here
+			for (size_t i = 0; i < graph<Item>::allocated; ++i) 
 			{
 				new_weights[i] = weights[i];	
 			}
@@ -106,7 +119,7 @@ namespace main_savitch_15
 		graph<Item>::remove_edge(source, target);
 		weights[source].erase(target);
 
-		return; //do we need to do anything to handle the weights?
+		return; 
 	}
 
 
