@@ -103,7 +103,10 @@ namespace main_savitch_15
 	template<class Item>
 	void wtdgraph<Item>::remove_edge(size_t source, size_t target)
 	{
-		return; //stub
+		graph<Item>::remove_edge(source, target);
+		weights[source].erase(target);
+
+		return; //do we need to do anything to handle the weights?
 	}
 
 
