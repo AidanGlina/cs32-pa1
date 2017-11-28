@@ -37,6 +37,7 @@ namespace main_savitch_15
 	wtdgraph<Item>::wtdgraph()
 	{
 		//not sure how to define the default constructor
+		weights = new map<size_t, size_t>[graph<Item>::allocated];
 	}
 
 
