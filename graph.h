@@ -73,7 +73,7 @@
 #include <set>      // Provides set
 using std::size_t;
 
-namespace main_savi=h_15
+namespace main_savitch_15
 {
     template <class Item>
     class graph
@@ -91,13 +91,13 @@ namespace main_savi=h_15
         // MODIFICATION MEMBER FUNCTIONS
         void add_vertex(const Item& label);
         void add_edge(size_t source, size_t target);
-        void remove_edge(size_t source, size_t target);
+        void remove_edge(size_t source, size_t target); //why isn't this virtual
         virtual void resize(size_t new_allocated);
         Item& operator [ ] (size_t vertex);
         // CONSTANT MEMBER FUNCTIONS
         size_t size( ) const { return many_vertices; }
         bool is_edge(size_t source, size_t target) const;
-    std::set<size_t> neighbors(size_t vertex) const;
+        std::set<size_t> neighbors(size_t vertex) const;
         Item operator[ ] (size_t vertex) const;
       private:
         bool **edges;

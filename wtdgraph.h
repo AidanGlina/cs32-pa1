@@ -12,23 +12,20 @@ namespace main_savitch_15
 		wtdgraph(size_t initial_allocation);
 		//wtdgraph(const wtdgraph &source);
 		virtual ~wtdgraph(); //why is this supposed to be virtual
-		wtdgraph<Item> &operator=(const wtdgraph &source);
-
-		void add_edge(size_t source, size_t target, size_t weight = 0);
-
 		virtual void resize(size_t new_allocation); //why is this supposed to be virtual
-
+		void add_edge(size_t source, size_t target, size_t weight = 0);
+		void remove_edge(size_t source, size_t target);
 		size_t edge_weight(size_t source, size_t target) const;
+		wtdgraph<Item> &operator=(const wtdgraph &source);
 	private:
 		map<size_t, size_t> *weights;
-
 	};
 
 
 	//constructor
 	template <class Item> 
 	wtdgraph<Item>::wtdgraph(size_t initial_allocation)
-	: graph(initial_allocation)
+	: graph<Item>::graph(initial_allocation)
 	{
 		//allocate memory for map array
 		weights = new map<size_t, size_t>[initial_allocation];
@@ -55,7 +52,7 @@ namespace main_savitch_15
 
 	//add_edge override
 	template <class Item>
-	void wtdgraph<Item>::add_edge(size_t source, size_t target, size_t weight = 0)
+	void wtdgraph<Item>::add_edge(size_t source, size_t target, size_t weight)
 	{
 		graph<Item>::add_edge(source, target);
 		//resize map array regardless if we need to, since the resize function checks if it's necessary
@@ -70,7 +67,7 @@ namespace main_savitch_15
 	void wtdgraph<Item>::resize(size_t new_allocation)
 	{
 		//resize map array
-		if(new_allocation < graph<Item>::allocated //not sure if size() is the correct thing to use here
+		if(new_allocation < graph<Item>::allocated) //not sure if size() is the correct thing to use here
 		{
 			return;
 		}else
@@ -84,9 +81,7 @@ namespace main_savitch_15
 			weights = new_weights;
 			graph<Item>::resize(new_allocation);
 		}
-		
 	}
-
 
 	//edge_weight
 	template <class Item>
@@ -100,7 +95,14 @@ namespace main_savitch_15
 	template<class Item>
 	wtdgraph<Item>& wtdgraph<Item>::operator=(const wtdgraph<Item> &source)
 	{
-		
+		//stub
+		return &source; 
+	}
+
+	template<class Item>
+	void wtdgraph<Item>::remove_edge(size_t source, size_t target)
+	{
+		return; //stub
 	}
 
 
