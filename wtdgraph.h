@@ -23,6 +23,9 @@ namespace main_savitch_15
 		map<size_t, size_t> *weights;
 
 	};
+
+
+	//constructor
 	template <class Item> 
 	wtdgraph<Item>::wtdgraph(size_t initial_allocation)
 	: graph(initial_allocation)
@@ -31,12 +34,16 @@ namespace main_savitch_15
 		weights = new map<size_t, size_t>[initial_allocation];
 	}
 
+
+	//default constructor
 	template <class Item>
 	wtdgraph<Item>::wtdgraph()
 	{
 		//not sure how to define the default constructor
 	}
 
+
+	//destructor
 	template <class Item>
 	wtdgraph<Item>::~wtdgraph()
 	{
@@ -45,6 +52,8 @@ namespace main_savitch_15
 		delete [] weights;
 	}
 
+
+	//add_edge override
 	template <class Item>
 	void wtdgraph<Item>::add_edge(size_t source, size_t target, size_t weight = 0)
 	{
@@ -55,6 +64,8 @@ namespace main_savitch_15
 
 	}
 
+
+	//resize override
 	template <class Item>
 	void wtdgraph<Item>::resize(size_t new_allocation)
 	{
@@ -76,12 +87,22 @@ namespace main_savitch_15
 		
 	}
 
+
+	//edge_weight
 	template <class Item>
 	size_t wtdgraph<Item>::edge_weight(size_t source, size_t target) const
 	{
 		assert(graph<Item>::is_edge(source, target));
 		return weights[source][target]; //not sure if this is right
 	}
+
+	//assignment operator
+	template<class Item>
+	wtdgraph<Item>& wtdgraph<Item>::operator=(const wtdgraph<Item> &source)
+	{
+		
+	}
+
 
 
 
